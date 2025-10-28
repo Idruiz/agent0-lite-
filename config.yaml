@@ -1,0 +1,19 @@
+# Agent0-Lite sidecar configuration (Phase 1)
+service_name: agent0-lite
+build_version: phase1-1.0.0
+port: 4040
+
+providers:
+  allow: ["openai", "groq"]
+  deny:  ["openrouter", "anthropic", "together", "replicate", "cohere", "gemini"]
+
+network:
+  # Only these hosts are probed/allowed in Phase 1 health
+  allowed_hosts:
+    - "api.openai.com"
+    - "api.groq.com"
+
+timeouts:
+  health_overall: 8   # global cap for /health assembly (seconds)
+  connect: 3          # TCP connect timeout for host probes (seconds)
+  read: 5             # provider HTTP read timeout (seconds)
